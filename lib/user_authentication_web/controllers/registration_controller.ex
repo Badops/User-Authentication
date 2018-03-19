@@ -1,6 +1,7 @@
 defmodule UserAuthenticationWeb.RegistrationController do
   use UserAuthenticationWeb, :controller
-  alias UserAuthentication.Accounts.User
+	alias UserAuthentication.Accounts.User
+	alias UserAuthentication.Accounts.Registration
 
   def new(conn, params) do
     changeset = User.changeset(%User{}, params)
@@ -10,11 +11,12 @@ defmodule UserAuthenticationWeb.RegistrationController do
   def create(conn, %{"user" => user_params}) do
   	changeset = User.changeset(%User{}, user_params)
 
-  	case Blog.Registration.create(changeset, Blog.Repo) do
-			{:ok, changeset} ->
+  	case Registration.create(changeset, UserAuthentication.Repo) do
+			{:ok, _changeset} ->
 				conn
 				|> put_flash(:info, "Your account was created")
 				|> redirect(to: "/")
+			
 			{:error, changeset} ->
 				conn
 				|> put_flash(:info, "Unable to create account")

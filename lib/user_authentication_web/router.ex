@@ -17,7 +17,10 @@ defmodule UserAuthenticationWeb.Router do
     pipe_through :browser # Use the default browser stack
     resources "/registrations", RegistrationController, only: [:new, :create]
 
-    get "/", PageController, :index
+    get    "/", PageController, :index
+    get    "/login",  SessionController, :new
+    post   "/login",  SessionController, :create
+    delete "/logout", SessionController, :delete
   end
 
   # Other scopes may use custom stacks.

@@ -11,8 +11,8 @@ defmodule UserAuthentication.Accounts.User do
     timestamps()
   end
 
-  @required_fields ~w(email password)
-  @optional_fields -w()
+  @required_fields [:email, :password]
+  @optional_fields []
 
   @doc false
   def changeset(user, attrs) do

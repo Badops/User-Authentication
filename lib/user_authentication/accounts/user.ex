@@ -6,15 +6,21 @@ defmodule UserAuthentication.Accounts.User do
   schema "users" do
     field :crypted_password, :string
     field :email, :string
+    field :password, :string, virtual: true
 
     timestamps()
   end
 
+  @required_fields ~w(email password)
+  @optional_fields -w()
+
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :crypted_password])
-    |> validate_required([:email, :crypted_password])
+    |> cast(attrs, @required_fields, @optional_fields)
+    |> validate_required(@required_fields)
     |> unique_constraint(:email)
+    |> validate_format(:email, ~r/@/)
+    |> validate_length(:password, min: 5)
   end
 end

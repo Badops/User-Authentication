@@ -22,5 +22,14 @@ defmodule UserAuthentication.Accounts.User do
     |> unique_constraint(:email)
     |> validate_format(:email, ~r/@/)
     |> validate_length(:password, min: 5)
+    |> hashed_password()
+  end
+
+  defp hashed_password(changeset) do
+    case changeset do
+    	%Ecto.Changeset{valid?: true, changes: %{password: pass}} ->
+    		 put_change(changeset, :crypted_password, Comeonin.Bcrypt.hashpwsalt(pass))
+      _ -> changeset
+    end
   end
 end

@@ -105,4 +105,8 @@ defmodule UserAuthentication.Accounts do
   def get_user_by_email(value) do
     Repo.get_by(User, email: value)
   end
+
+  def get_user(id) do
+    Repo.get!(User, id)
+  end
 end

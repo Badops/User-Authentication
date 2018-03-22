@@ -13,6 +13,7 @@ defmodule UserAuthenticationWeb.RegistrationController do
 		case Accounts.create_user(user_params) do
 			{:ok, _changeset} ->
 				conn
+				|> put_session(:current_user, changeset.id)
 				|> put_flash(:info, "Your account was created")
 				|> redirect(to: "/")
 			

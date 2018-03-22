@@ -11,7 +11,7 @@ defmodule UserAuthenticationWeb.RegistrationController do
   def create(conn, %{"user" => user_params}) do
 		
 		case Accounts.create_user(user_params) do
-			{:ok, _changeset} ->
+			{:ok, changeset} ->
 				conn
 				|> put_session(:current_user, changeset.id)
 				|> put_flash(:info, "Your account was created")
